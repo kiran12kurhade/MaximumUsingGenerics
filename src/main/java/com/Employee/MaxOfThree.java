@@ -14,14 +14,13 @@ public class MaxOfThree<T extends Comparable<T>> {
         this.elements = Arrays.asList(elements);
     }
 
-    // Instance method to find the maximum element using the static max method
+    // Instance method to find and print the maximum element using the static max method
     public Optional<T> testMaximum() {
-        return max(elements);
+        return printMax(elements);
     }
 
     // Static method to find the maximum element in a list using sorting and Optional
     public static <T extends Comparable<T>> Optional<T> max(List<T> elements) {
-        // Handle case where the list might be empty
         if (elements == null || elements.isEmpty()) {
             return Optional.empty();
         }
@@ -30,15 +29,21 @@ public class MaxOfThree<T extends Comparable<T>> {
         return Optional.ofNullable(elements.get(elements.size() - 1));
     }
 
-    // Static method to test the max functionality
+    // Static generic method to find the maximum and print it
+    public static <T extends Comparable<T>> Optional<T> printMax(List<T> elements) {
+        Optional<T> max = max(elements);
+        if (max.isPresent()) {
+            System.out.println("Maximum value is: " + max.get());
+        } else {
+            System.out.println("No elements to find maximum from.");
+        }
+        return max;
+    }
+
+    // Static method to test the max functionality and print the result
     @SafeVarargs
     public static <T extends Comparable<T>> void testMax(T... elements) {
-        Optional<T> max = max(Arrays.asList(elements));
-        if (max.isPresent()) {
-            System.out.println("Max of " + Arrays.toString(elements) + " is: " + max.get());
-        } else {
-            System.out.println("The list is empty, no maximum value.");
-        }
+        printMax(Arrays.asList(elements));
     }
 
     public static void main(String[] args) {
